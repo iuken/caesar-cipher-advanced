@@ -1,7 +1,6 @@
 package com.company.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,31 +35,32 @@ public class SimpleDecryptionService implements DecryptionService {
 
     public int[] FilterByRegex(String text, String[] regex, int[] keys) {
         String tempText;
-        ArrayList<Integer> keyList =new ArrayList<Integer>();
+        ArrayList<Integer> keyList = new ArrayList<Integer>();
         for (int i = 0; i < keys.length; i++) {
             keyList.add(keys[i]);
         }
-
         System.out.println(regex.length);
         for (int i = 0; i < keys.length; i++) {
             tempText = this.DecryptString(text, keys[i]);
+            System.out.println("checking key: " + keys[i]);
             for (int j = 0; j < regex.length; j++) {
                 Pattern pattern = Pattern.compile(regex[j]);
-                System.out.print(regex[j]);
+                System.out.print(regex[j] + " ");
                 Matcher matcher = pattern.matcher(tempText);
                 if (matcher.find()) {
-                    keyList.remove(keys[i]);
-//                    break;
+                    System.out.println();
+                    System.out.print("\"" + regex[j] + "\" was found: key " + keys[i] + " will be removed");
+                    keyList.remove((Integer) keys[i]);
+                    break;
                 }
             }
             System.out.println();
+            System.out.println();
         }
-
         int[] resultKey = new int[keyList.size()];
-        for (int i = 0; i<keyList.size(); i++){
+        for (int i = 0; i < keyList.size(); i++) {
             resultKey[i] = (int) keyList.get(i);
         }
-
         return resultKey;
     }
 }
