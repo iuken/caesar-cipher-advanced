@@ -53,6 +53,9 @@ public class Main {
                             break;
                         }
                     }
+                    if (isInputCorrect){
+                        break;
+                    }
                     System.out.println("Type the correct key or \"exit\": ");
                 } catch (IOException e) {
                     e.printStackTrace();
